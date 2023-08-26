@@ -132,3 +132,27 @@ body {
 .searchToggle.selected {
     background: #f05;
 }
+
+.results > .heading {
+    padding:15px;
+    font-size:xx-large;
+    color:#fff;
+}
+@media (orientation: portrait){
+    .top-pane{
+        flex-direction:column;
+    }
+    .left-pane{
+        width:auto;
+        border-radius:0px;
+    }
+    .searchToggle {
+        display:none;
+    }
+    .search-container{
+        padding:10px;
+    }
+    button[data-testid="rk-connect-button"] {
+        display:none;
+    }
+}

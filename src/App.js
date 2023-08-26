@@ -4,7 +4,6 @@ class Card extends React.Component {
     render() {
         const tableData = this.props.data.d;
         const rows = tableData.map((row) => {
-            console.log(row);
             const cells = row.map((cell) => {
                 return <td>{cell}</td>;
             });
@@ -108,39 +107,84 @@ class SearchForm extends React.Component {
 
     updateResults(searchTerm) {
         const inst = this;
-        console.log(searchTerm);
-        let url =
-            this.props.type === "token"
-                ? "https://api.dexscreener.com/latest/dex/tokens/" + searchTerm
-                : "https://api.dexscreener.com/latest/dex/search/?q=" + searchTerm;
-        console.log(url);
-        fetch(url)
-            .then((result) => {
-                return result.json();
-            })
-            .then((result) => {
-                console.log(result);
-                if (result.pairs === null) {
+
+        this.setState({
+            pairs: "",
+            tokenPairs: ""
+        })
+
+        if (this.props.type === "pair" || window.innerWidth <= window.innerHeight)
+            fetch("https://api.dexscreener.com/latest/dex/search/?q=" + searchTerm)
+                .then((result) => {
+                    return result.json();
+                })
+                .then((result) => {
+                    if (result.pairs === null) {
+                        inst.setState({
+                            pairs: (
+                                <div className="results">
+                                    <div className="heading">Pair Search Results</div>
+                                    <div style={{ color: "#fff" }}>No matching Result Found.</div>
+                                </div>
+                            ),
+                        });
+                        return;
+                    }
+                    if (inst.props.type) {
+                        result.pairs.sort(function (a, b) {
+                            return b.priceUsd - a.priceUsd;
+                        });
+                    }
+                    result.pairs = result.pairs.slice(0, 10);
+                    const pairs = result.pairs.map((pairData) => {
+                        return <Pair data={pairData}></Pair>;
+                    });
                     inst.setState({
                         pairs: (
-                            <div style={{ color: "#fff" }}>No matching Result Found.</div>
-                        ),
+                            <div className="results">
+                                <div className="heading">Pair Search Results</div>
+                                {pairs}
+                            </div>
+                        )
                     });
-                    return;
-                }
-                if (inst.props.type) {
-                    result.pairs.sort(function (a, b) {
-                        return b.priceUsd - a.priceUsd;
+                });
+
+        if (this.props.type === "token" || window.innerWidth <= window.innerHeight)
+            fetch("https://api.dexscreener.com/latest/dex/tokens/" + searchTerm)
+                .then((result) => {
+                    return result.json();
+                })
+                .then((result) => {
+                    if (result.pairs === null) {
+                        inst.setState({
+                            tokenPairs: (
+
+                                <div className="results">
+                                    <div className="heading">Token Search Results</div>
+                                    <div style={{ color: "#fff" }}>No matching Result Found.</div>
+                                </div>
+                            ),
+                        });
+                        return;
+                    }
+                    if (inst.props.type) {
+                        result.pairs.sort(function (a, b) {
+                            return b.priceUsd - a.priceUsd;
+                        });
+                    }
+                    result.pairs = result.pairs.slice(0, 10);
+                    const pairs = result.pairs.map((pairData) => {
+                        return <Pair data={pairData}></Pair>;
                     });
-                }
-                result.pairs = result.pairs.slice(0, 10);
-                const pairs = result.pairs.map((pairData) => {
-                    return <Pair data={pairData}></Pair>;
+                    inst.setState({
+                        tokenPairs: (
+                            <div className="results">
+                                <div className="heading">Token Search Results</div>
+                                {pairs}
+                            </div>
+                        )
+                    });
                 });
-                inst.setState({
-                    pairs: pairs,
-                });
-            });
     }
     render() {
         return (
@@ -156,8 +200,8 @@ class SearchForm extends React.Component {
                     <ConnectButton label="Connect"></ConnectButton>
                 </form>
                 <div className="results-container">
-                    <div className="heading"></div>
-                    <div className="results">{this.state.pairs}</div>
+                    {this.state.tokenPairs}
+                    {this.state.pairs}
                 </div>
             </div>
         );
