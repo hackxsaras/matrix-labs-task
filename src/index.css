@@ -1,0 +1,134 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.card {
+    background: #390554;
+    display: inline-block;
+    color: #fff;
+    border-radius: 15px;
+    margin-left: 20px;
+    margin-top: 20px;
+    position: relative;
+}
+
+.card .details {
+    width: 250px;
+    padding: 20px;
+    height: 150px;
+
+}
+
+.card .heading {
+    font-size: large;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.card table td {
+    width: 100px;
+    font-size: 13px;
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.card .btn {
+    background: #960252;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+.pair {
+    border-bottom: 1px solid rgba(255, 255, 255, .1);
+    padding-bottom: 15px;
+}
+
+.fc {
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+}
+
+.top-pane {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+}
+
+.bottom-strip {
+    height: 8vh;
+    background: #f30050;
+}
+
+.left-pane {
+    width: min(300px, 90vw);
+    background: #292929;
+    border-top-right-radius: 40px;
+}
+
+.right-pane {
+    flex-direction: column;
+    flex: 1;
+    padding: 15px;
+    overflow: auto;
+}
+
+.search-container {
+    padding-left: 60px;
+    display: flex;
+}
+
+.search-box {
+    width: min(400px, 90vw);
+    border: 1px solid #fff;
+    border-radius: 20px;
+    padding: 15px;
+    padding-left: 20px;
+    background: rgba(255, 255, 255, .1);
+    color: #fff;
+    outline: none;
+    font-size: 20px;
+}
+
+[data-test-id="rk-connect-button"] {
+    color: #fff;
+    padding: 14px 30px;
+    background: linear-gradient(to right, #7b0f37, #5c1363);
+    font-size: 20px;
+    border-radius: 60px;
+}
+
+.empty {
+    flex: 1;
+}
+
+.logo {
+    color: #fff;
+    font-size: x-large;
+    text-align: center;
+    padding: 20px;
+}
+
+.searchToggle {
+    cursor: pointer;
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+    color: #fff;
+}
+
+.searchToggle.selected {
+    background: #f05;
+}
